@@ -1,0 +1,49 @@
+.cardContainer {
+  background-color: #FFFFFF;
+  border-radius: 14px;
+  width: fit-content;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.04);
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.userName {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 34px;
+  text-align: center;
+  color: #202020;
+}
+
+.userEmployment {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: #A5A5A5;
+}
+
+.userCompany {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: #6418C3;
+}
+
+.userContactInfo {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  color: #202020;
+}
+
+.contactIcons {
+  background-color: #F6EEFF;
+  border-radius: 10px;
+}
