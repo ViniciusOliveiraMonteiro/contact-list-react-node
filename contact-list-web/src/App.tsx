@@ -1,24 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { ContactCard } from './components/contact-card/ContactCard';
+import { SearchBar } from './components/search-bar/SearchBar';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className='d-flex justify-content-center mt-4 mb-5'>
+        <SearchBar />
+      </div>
+      <div className='d-flex justify-content-center flex-wrap'>
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+      </div>
     </div>
   );
 }

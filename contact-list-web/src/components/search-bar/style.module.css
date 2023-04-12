@@ -1,0 +1,18 @@
+.inputSearchContainer {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.04);
+  border-radius: 14px;
+}
+
+.inputSearch {
+  background: #FFFFFF;
+  border: none;
+  width: 500px;
+  height: 70px;
+  outline: none;
+}
+
+.iconSearch {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
