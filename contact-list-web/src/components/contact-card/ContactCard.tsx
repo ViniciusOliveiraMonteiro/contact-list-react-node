@@ -2,8 +2,17 @@ import style from './style.module.css';
 import img from '../../assets/profilePicture.png';
 import { HiMail } from 'react-icons/hi';
 import { RxDotsVertical } from 'react-icons/rx'
+import { FaPhoneAlt } from "react-icons/fa";
 
-export function ContactCard() {
+interface ContactCardProps {
+  contactName: string;
+  contactEmployment: string;
+  contactCompany: string;
+  contactPhone: string;
+  contactEmail: string;
+}
+
+export function ContactCard(props: ContactCardProps) {
   return (
     <>
       <div className={`d-flex flex-column m-2 ${style.cardContainer}`}>
@@ -14,24 +23,24 @@ export function ContactCard() {
           </div>
         </div>
         <div className={`mt-3 ${style.userName}`}>
-          <span>Angela Moss</span>
+          <span>{props.contactName}</span>
         </div>
         <div className={`mb-3 d-flex flex-column`}>
-          <span className={`${style.userEmployment}`}>Marketing Manager at</span>
-          <span className={`${style.userCompany}`}>Highspeed Studios</span>
+          <span className={`${style.userEmployment}`}>{props.contactEmployment} em</span>
+          <span className={`${style.userCompany}`}>{props.contactCompany}</span>
         </div>
         <div className={`d-flex flex-column ${style.userContactInfo}`}>
           <div className='d-flex align-items-center mb-2'>
             <div className={`${style.contactIcons} me-3 p-1`}>
-              <HiMail size={30} color='#6418C3' />
+              <FaPhoneAlt size={30} color='#6418C3' className='p-1' />
             </div>
-            <span>71 98877 6655</span>
+            <span>{props.contactPhone}</span>
           </div>
           <div className='d-flex align-items-center'>
             <div className={`${style.contactIcons} me-3 p-1`}>
               <HiMail size={30} color='#6418C3' />
             </div>
-            <span>angelamoss@mail.com</span>
+            <span>{props.contactEmail}</span>
           </div>
         </div>
       </div>
