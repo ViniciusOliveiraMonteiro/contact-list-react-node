@@ -1,0 +1,7 @@
+.buttonContainer {
+  background-color: #6418C3;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+}
