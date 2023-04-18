@@ -1,0 +1,11 @@
+.customInput {
+  border-radius: 10px;
+  border: 1px solid #6418C3;
+  height: 35px;
+  padding: 0px 10px;
+  width: 300px;
+}
+
+.customInput:focus {
+  outline: none;
+}
