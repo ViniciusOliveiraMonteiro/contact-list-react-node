@@ -9,3 +9,18 @@
 .customInput:focus {
   outline: none;
 }
+
+.submitButton {
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 500;
+  height: 35px;
+  background-color: #ddf3e4;
+  border: none;
+  padding: 0px 20px;
+  border-radius: 5px;
+}
+
+.submitButton:hover {
+  background-color: #ccebd7;
+}

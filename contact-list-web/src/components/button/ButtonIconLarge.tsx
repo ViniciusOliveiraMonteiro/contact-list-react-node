@@ -10,8 +10,8 @@ interface ButtonIconLargeProps {
 }
 
 export function ButtonIconLarge(props : ButtonIconLargeProps){
+  
   return(
-
     <Dialog.Root>
       <Dialog.Trigger className={`${style.buttonContainer} ms-5 ps-3 pe-3`}>
         {props.children}
