@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { VscChromeClose } from "react-icons/vsc";
 import { RegisterForm } from '../register-form/RegisterForm';
@@ -10,9 +10,10 @@ interface ButtonIconLargeProps {
 }
 
 export function ButtonIconLarge(props : ButtonIconLargeProps){
-  
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   return(
-    <Dialog.Root>
+    <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
       <Dialog.Trigger className={`${style.buttonContainer} ms-5 ps-3 pe-3`}>
         {props.children}
         <span className='text-white fs-6 ms-2'>{props.buttonText}</span>
@@ -23,7 +24,7 @@ export function ButtonIconLarge(props : ButtonIconLargeProps){
           <Dialog.Title className='fs-4'>
             Cadastrar contato
           </Dialog.Title>
-          <RegisterForm />
+          <RegisterForm dialogState={setDialogOpen}/>
           <Dialog.Close className={`${style.closeButton}`}>
             <VscChromeClose size={20} className='m-1'/>
           </Dialog.Close>
