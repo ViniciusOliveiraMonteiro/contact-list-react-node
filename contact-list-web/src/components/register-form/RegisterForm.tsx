@@ -1,6 +1,7 @@
 import style from './style.module.css';
 import { FormEvent, useState } from 'react';
 import InputMask from "react-input-mask";
+import { RegisterFormService } from './RegisterFormService';
 
 interface RegisterFormProps {
   dialogState?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,12 +13,21 @@ export function RegisterForm(props: RegisterFormProps){
   const [email, setEmail] = useState('');
   const [occupation, setOccupation] = useState('');
   const [companyName, setCompanyName] = useState('');
+  const service = new RegisterFormService();
 
-  function submitFormAction(event: FormEvent){
+  async function submitFormAction(event: FormEvent){
     event.preventDefault();
-    console.log(fullName, numberPhone, email, occupation, companyName);
-    if(props.dialogState){
-      props.dialogState(false);
+    const data = {
+      contactFullName: fullName,
+      contactEmail: email,
+      companyName: companyName,
+      contactPhoneNumber: numberPhone,
+      contactOccupation: occupation
+    };
+    const response = await service.registerContact(data);
+    console.log(response);
+    if(props.dialogState && response.success){
+      await props.dialogState(false);
     }
   }
 

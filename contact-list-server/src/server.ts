@@ -1,9 +1,11 @@
 import Fastify from "fastify";
-import { registerContactRoutes } from "./routes/registerContact";
+import cors from '@fastify/cors';
+import { contactRoutes } from "./routes/contact";
 
 const app = Fastify();
 
-app.register(registerContactRoutes);
+app.register(cors);
+app.register(contactRoutes);
 
 app.listen({
   port: 3333,
