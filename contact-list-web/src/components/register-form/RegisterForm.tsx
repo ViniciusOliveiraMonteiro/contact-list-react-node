@@ -25,7 +25,6 @@ export function RegisterForm(props: RegisterFormProps){
       contactOccupation: occupation
     };
     const response = await service.registerContact(data);
-    console.log(response);
     if(props.dialogState && response.success){
       await props.dialogState(false);
     }
