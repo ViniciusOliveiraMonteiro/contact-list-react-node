@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export class AppService{
+export class ContactDashboardService{
   private url!: string;
   constructor(){
     this.url = 'list-contact';
