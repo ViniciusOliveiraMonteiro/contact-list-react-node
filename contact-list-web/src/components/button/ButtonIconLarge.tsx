@@ -2,11 +2,13 @@ import { ReactNode, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { VscChromeClose } from "react-icons/vsc";
 import { RegisterForm } from '../register-form/RegisterForm';
+import { ContactCards } from '../../pages/contact-page/ContactPage';
 import style from './style.module.css';
 
 interface ButtonIconLargeProps {
   buttonText: string;
   children: ReactNode;
+  setUpdatedState?:React.Dispatch<React.SetStateAction<ContactCards>>;
 }
 
 export function ButtonIconLarge(props : ButtonIconLargeProps){
@@ -24,7 +26,10 @@ export function ButtonIconLarge(props : ButtonIconLargeProps){
           <Dialog.Title className='fs-4'>
             Cadastrar contato
           </Dialog.Title>
-          <RegisterForm dialogState={setDialogOpen}/>
+          <RegisterForm 
+            dialogState={setDialogOpen}
+            setUpdatedState={props.setUpdatedState}
+          />
           <Dialog.Close className={`${style.closeButton}`}>
             <VscChromeClose size={20} className='m-1'/>
           </Dialog.Close>

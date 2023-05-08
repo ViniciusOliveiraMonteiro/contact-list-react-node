@@ -1,36 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ContactCard } from "../contact-card/ContactCard";
 import { ContactDashboardService } from "./ContactDashboardService";
+import { ContactCards } from "../../pages/contact-page/ContactPage";
 
-interface ContactCards extends Array<ContactCards> {
-  occupation: string;
-  created_ar: string;
-  company: {
-    name: string;
-    id: string;
-  },
-  contact: {
-    fullName: string;
-    email: string;
-    phoneNumber: string;
-    id: string;
-  }
-};
+interface ContactDashboardProps {
+  updatedState: ContactCards;
+  setUpdatedState:React.Dispatch<React.SetStateAction<ContactCards>>;
+}
 
-export function ContactDashboard() {
-  const [contactCards, setContactCards] = useState<ContactCards>([] as any);
+export function ContactDashboard({ updatedState, setUpdatedState }: ContactDashboardProps) {
+  
   useEffect(() => {
     const service = new ContactDashboardService();
     const getData = async () => {
       const response = await service.listContact();
-      setContactCards(response.data);
+      if(response.data){
+        setUpdatedState(response.data);
+      }
     };
     getData();
-  }, []);
+  }, [setUpdatedState]);
   return (
     <div className='d-flex justify-content-center flex-wrap'>
       {
-        contactCards.map((item, index) => {
+        updatedState.map((item, index) => {
           return (
             <ContactCard
               contactCompany={item.company.name}
