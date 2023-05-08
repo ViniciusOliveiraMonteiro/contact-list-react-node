@@ -2,9 +2,12 @@ import style from './style.module.css';
 import { FormEvent, useState } from 'react';
 import InputMask from "react-input-mask";
 import { RegisterFormService } from './RegisterFormService';
+import { ContactCards } from '../../pages/contact-page/ContactPage';
+import { ContactDashboardService } from '../contact-dashboard/ContactDashboardService';
 
 interface RegisterFormProps {
   dialogState?: React.Dispatch<React.SetStateAction<boolean>>;
+  setUpdatedState?:React.Dispatch<React.SetStateAction<ContactCards>>;
 }
 
 export function RegisterForm(props: RegisterFormProps){
@@ -14,6 +17,7 @@ export function RegisterForm(props: RegisterFormProps){
   const [occupation, setOccupation] = useState('');
   const [companyName, setCompanyName] = useState('');
   const service = new RegisterFormService();
+  const dashboardService = new ContactDashboardService();
 
   async function submitFormAction(event: FormEvent){
     event.preventDefault();
@@ -25,8 +29,13 @@ export function RegisterForm(props: RegisterFormProps){
       contactOccupation: occupation
     };
     const response = await service.registerContact(data);
-    if(props.dialogState && response.success){
-      await props.dialogState(false);
+    const dashboardResponse = await dashboardService.listContact();
+    if((props.dialogState && response.success)){
+      if(props.setUpdatedState && dashboardResponse.data){
+        console.log(dashboardResponse, dashboardResponse.data);
+        props.setUpdatedState(dashboardResponse.data);
+      }
+      props.dialogState(false);
     }
   }
 
