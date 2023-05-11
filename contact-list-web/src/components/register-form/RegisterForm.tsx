@@ -1,6 +1,9 @@
 import style from './style.module.css';
 import { FormEvent, useState } from 'react';
 import InputMask from "react-input-mask";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 import { RegisterFormService } from './RegisterFormService';
 import { ContactCards } from '../../pages/contact-page/ContactPage';
 import { ContactDashboardService } from '../contact-dashboard/ContactDashboardService';
@@ -10,14 +13,27 @@ interface RegisterFormProps {
   setUpdatedState?:React.Dispatch<React.SetStateAction<ContactCards>>;
 }
 
+interface ISubmitForm {
+  fullname: string;
+  numberPhone: string;
+  email: string;
+  occupation: string;
+  companyName: string;
+};
+
 export function RegisterForm(props: RegisterFormProps){
   const [fullName, setFullName] = useState('');
   const [numberPhone, setNumberPhone] = useState('');
   const [email, setEmail] = useState('');
   const [occupation, setOccupation] = useState('');
   const [companyName, setCompanyName] = useState('');
+  const [mask, setMask] = useState('');
   const service = new RegisterFormService();
   const dashboardService = new ContactDashboardService();
+  const validationScheme = Yup.object().shape({
+    fullName: Yup.string().required('Nome Completo é obrigatório'),
+    numberPhone: Yup.string().trim().required('Telefone é obrigatório'),
+  });
 
   async function submitFormAction(event: FormEvent){
     event.preventDefault();
@@ -53,10 +69,16 @@ export function RegisterForm(props: RegisterFormProps){
       <div className='d-flex flex-column mb-2'>
         <label htmlFor="">Telefone</label>
         <InputMask 
-          mask={'99 99999 9999'} 
+          mask={mask} 
+          maskChar=''
           className={`${style.customInput}`}
           value={numberPhone}
-          onChange={(event)=>setNumberPhone(event.target.value)}
+          onChange={(event)=>{
+            setNumberPhone(event.target.value);
+            numberPhone.length < 11 ? 
+              setMask('99 9999-9999') :
+              setMask('99 99999-9999');
+          }}
         />
       </div>
       <div className='d-flex flex-column mb-2'>

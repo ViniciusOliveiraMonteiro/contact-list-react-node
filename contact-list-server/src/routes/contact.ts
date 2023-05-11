@@ -24,7 +24,7 @@ export async function contactRoutes(app: FastifyInstance) {
         data: {
           fullName: contactFullName,
           email: contactEmail,
-          phoneNumber: contactPhoneNumber,
+          phoneNumber: contactPhoneNumber.trim(),
         }
       });
 
