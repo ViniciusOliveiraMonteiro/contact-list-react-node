@@ -27,7 +27,6 @@ export function RegisterForm(props: RegisterFormProps){
   const [email, setEmail] = useState('');
   const [occupation, setOccupation] = useState('');
   const [companyName, setCompanyName] = useState('');
-  const [mask, setMask] = useState('');
   const service = new RegisterFormService();
   const dashboardService = new ContactDashboardService();
   const validationScheme = Yup.object().shape({
@@ -69,15 +68,22 @@ export function RegisterForm(props: RegisterFormProps){
       <div className='d-flex flex-column mb-2'>
         <label htmlFor="">Telefone</label>
         <InputMask 
-          mask={mask} 
-          maskChar=''
+          mask={numberPhone.replace(/[^\d]/g, '').length >= 6 && numberPhone[3] == '9' ? '99 99999-9999' : '99 9999-9999'} 
+          maskPlaceholder={null}
           className={`${style.customInput}`}
           value={numberPhone}
           onChange={(event)=>{
             setNumberPhone(event.target.value);
-            numberPhone.length < 11 ? 
-              setMask('99 9999-9999') :
-              setMask('99 99999-9999');
+          }}
+          beforeMaskedStateChange={({ nextState })=>{
+            let { value } = nextState;
+            if(value[0] == '0'){
+              value = value.replace(/^0(.+)/, '$1')
+            }
+            return {
+              ...nextState,
+              value
+            }
           }}
         />
       </div>

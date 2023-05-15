@@ -24,7 +24,7 @@ export async function contactRoutes(app: FastifyInstance) {
         data: {
           fullName: contactFullName,
           email: contactEmail,
-          phoneNumber: contactPhoneNumber.trim(),
+          phoneNumber: contactPhoneNumber.replace(/[^\d]/g, ''),
         }
       });
 
@@ -71,9 +71,16 @@ export async function contactRoutes(app: FastifyInstance) {
         }
       });
 
+      const formatedSummary = summary.map(item => {
+        if(item.contact){
+          item.contact.phoneNumber = item.contact.phoneNumber.replace(/^(\d{2})\s?(\d{4,5})\s?(\d{4})$/, "$1 $2-$3");
+        }
+        return item;
+      });
+
       return {
         success: true,
-        data: [...summary]
+        data: [...formatedSummary]
       };
     });
   } catch (error) {
