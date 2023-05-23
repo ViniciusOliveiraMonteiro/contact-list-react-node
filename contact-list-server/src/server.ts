@@ -6,7 +6,6 @@ const app = Fastify();
 
 app.register(cors);
 app.register(contactRoutes);
-
 app.listen({
   port: 3333,
 }).then(() => {
