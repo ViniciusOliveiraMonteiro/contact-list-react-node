@@ -1,5 +1,5 @@
 import style from './style.module.css';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import InputMask from "react-input-mask";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -62,9 +62,9 @@ export function RegisterForm(props: RegisterFormProps) {
       ...prevState,
       [name]: value
     }));
-    Object.values(formData).every(str => str.trim().length) ?
-      setButtonDisabled(false) :
-      setButtonDisabled(true);
+    if(Object.values(formData).every(str => str.trim().length)){
+      setButtonDisabled(false);
+    }
   }
 
   async function submitFormAction() {
@@ -75,14 +75,14 @@ export function RegisterForm(props: RegisterFormProps) {
       contactPhoneNumber: numberPhone,
       contactOccupation: occupation
     };
-    /*const response = await service.registerContact(data);
+    const response = await service.registerContact(data);
     const dashboardResponse = await dashboardService.listContact();
     if((props.dialogState && response.success)){
       if(props.setUpdatedState && dashboardResponse.data){
         props.setUpdatedState(dashboardResponse.data);
       }
       props.dialogState(false);
-    }*/
+    }
   }
 
   return (
