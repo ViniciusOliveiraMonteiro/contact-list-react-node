@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { prisma } from "../lib/prisma";
 import { z } from 'zod';
+import { PaginationResponse } from '../types/paginationResponse';
 
 export async function contactRoutes(app: FastifyInstance) {
   try {
@@ -50,6 +51,7 @@ export async function contactRoutes(app: FastifyInstance) {
     });
 
     app.get('/list-contact', async (request) => {
+      const { page, pageSize } = request.query as {page: number, pageSize: number};
       const summary = await prisma.contactCompany.findMany({
         select: {
           occupation: true,
@@ -78,10 +80,22 @@ export async function contactRoutes(app: FastifyInstance) {
         return item;
       });
 
-      return {
+      const startIndex = (page - 1) * +pageSize;
+      const lastIndex = startIndex + +pageSize;
+      const totalRecords = formatedSummary.length;
+      const records = formatedSummary.slice(startIndex, lastIndex);
+      const totalPages = Math.ceil(totalRecords/pageSize);
+
+      const response: PaginationResponse = {
         success: true,
-        data: [...formatedSummary]
-      };
+        page,
+        pageSize,
+        totalPages,
+        totalRecords,
+        data: records
+      }
+
+      return response
     });
   } catch (error) {
     return {
