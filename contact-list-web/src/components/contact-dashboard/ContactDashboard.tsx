@@ -12,6 +12,7 @@ interface ContactDashboardProps {
 
 export function ContactDashboard({ updatedState, setUpdatedState }: ContactDashboardProps) {
   const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState('5');
   useEffect(() => {
     const service = new ContactDashboardService();
     const getData = async () => {
@@ -23,10 +24,25 @@ export function ContactDashboard({ updatedState, setUpdatedState }: ContactDashb
     };
     getData();
   }, [setUpdatedState]);
+
+  async function requestData(page: number, pageSize: number){
+    const service = new ContactDashboardService();
+    const response = await service.listContact(page, +pageSize);
+    if (response.data) {
+      setTotalPages(response.totalPages);
+      setUpdatedState(response.data);
+    }
+  }
+
+  async function selectPageSize(value: string) {
+    setPageSize(value);
+    await requestData(1, +value);
+  }
+
   return (
     <div className="d-flex flex-column">
       <div className="d-flex justify-content-end">
-        <DropDownSelect />
+        <DropDownSelect onChangeHandle={selectPageSize} />
       </div>
       <div className='d-flex justify-content-center flex-wrap'>
         {
@@ -46,11 +62,7 @@ export function ContactDashboard({ updatedState, setUpdatedState }: ContactDashb
       </div>
       <div className={`position-absolute bottom-0 end-0`}>
         <Pagination count={totalPages} onChange={async (event, page) => {
-          const service = new ContactDashboardService();
-          const response = await service.listContact(page);
-          if (response.data) {
-            setUpdatedState(response.data);
-          }
+          await requestData(page, +pageSize)
         }} />
       </div>
     </div>
