@@ -1,6 +1,7 @@
 import React from 'react';
 import * as Select from '@radix-ui/react-select';
 import classnames from 'classnames';
+import { ContactCards } from '../../pages/contact-page/ContactPage';
 import style from './style.module.css';
 
 interface SelectItemProps {
@@ -9,19 +10,23 @@ interface SelectItemProps {
   children: React.ReactNode;
 }
 
-export function DropDownSelect() {
+interface DropDownSelectProps {
+  onChangeHandle: (value: string) => void;
+}
+
+
+export function DropDownSelect({ onChangeHandle }: DropDownSelectProps) {
   const SelectItem: React.FC<SelectItemProps> = ({ children, className, ...props }) => {
     const ref = React.useRef<HTMLDivElement>(null);
-
+    
     return (
       <Select.Item className={classnames('SelectItem', className)} {...props} ref={ref}>
         <Select.ItemText>{children}</Select.ItemText>
       </Select.Item>
     );
   };
-
   return (
-    <Select.Root>
+    <Select.Root onValueChange={onChangeHandle}>
       <Select.Trigger className={`${style.SelectTrigger}`} aria-label="items">
         <Select.Value placeholder="Quantidade de registros" />
       </Select.Trigger>
