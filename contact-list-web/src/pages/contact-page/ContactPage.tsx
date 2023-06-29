@@ -13,6 +13,7 @@ export interface ContactCards extends Array<ContactCards> {
   },
   contact: {
     fullName: string;
+    formatedName: string;
     email: string;
     phoneNumber: string;
     id: string;
