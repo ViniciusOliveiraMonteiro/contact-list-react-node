@@ -1,8 +1,8 @@
 import style from './style.module.css';
 import img from '../../assets/profilePicture.png';
 import { HiMail } from 'react-icons/hi';
-import { RxDotsVertical } from 'react-icons/rx'
 import { FaPhoneAlt } from "react-icons/fa";
+import { CustomDropDownMenu } from '../drop-down-menu/DropDownMenu';
 
 interface ContactCardProps {
   contactName: string;
@@ -18,8 +18,8 @@ export function ContactCard(props: ContactCardProps) {
       <div className={`d-flex flex-column m-2 ${style.cardContainer}`}>
         <div className={`position-relative w-100 `}>
           <img src={img} alt="" className='ms-5'/>
-          <div className={`position-absolute top-0 end-0`}>
-            <RxDotsVertical size={25} color='#A5A5A5'/>
+          <div role="button" className={`position-absolute top-0 end-0`}>
+            <CustomDropDownMenu />
           </div>
         </div>
         <div className={`mt-3 ${style.userName}`}>

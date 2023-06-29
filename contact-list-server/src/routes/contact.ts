@@ -75,6 +75,12 @@ export async function contactRoutes(app: FastifyInstance) {
 
       const formatedSummary = summary.map(item => {
         if(item.contact){
+          const splitedName = item.contact.fullName.split(' ');
+          Object.assign(item.contact, {formatedName: splitedName[0]});
+          if(splitedName.length > 1) {
+            const formatedName = splitedName[0]+' '+splitedName[splitedName.length-1]
+            Object.assign(item.contact, {formatedName: formatedName});
+          }
           item.contact.phoneNumber = item.contact.phoneNumber.replace(/^(\d{2})\s?(\d{4,5})\s?(\d{4})$/, "$1 $2-$3");
         }
         return item;

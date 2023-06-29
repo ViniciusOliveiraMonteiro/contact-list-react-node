@@ -20,7 +20,7 @@ export function DropDownSelect({ onChangeHandle }: DropDownSelectProps) {
     const ref = React.useRef<HTMLDivElement>(null);
     
     return (
-      <Select.Item className={classnames('SelectItem', className)} {...props} ref={ref}>
+      <Select.Item className={classnames(`${style.SelectItem}`, className)} {...props} ref={ref}>
         <Select.ItemText>{children}</Select.ItemText>
       </Select.Item>
     );

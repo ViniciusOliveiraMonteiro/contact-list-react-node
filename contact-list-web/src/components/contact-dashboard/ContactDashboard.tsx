@@ -41,7 +41,7 @@ export function ContactDashboard({ updatedState, setUpdatedState }: ContactDashb
 
   return (
     <div className="d-flex flex-column">
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-end me-3 mb-3">
         <DropDownSelect onChangeHandle={selectPageSize} />
       </div>
       <div className='d-flex justify-content-center flex-wrap'>
@@ -52,7 +52,7 @@ export function ContactDashboard({ updatedState, setUpdatedState }: ContactDashb
                 contactCompany={item.company.name}
                 contactEmail={item.contact.email}
                 contactEmployment={item.occupation}
-                contactName={item.contact.fullName}
+                contactName={item.contact.formatedName}
                 contactPhone={item.contact.phoneNumber}
                 key={index}
               />
