@@ -8,19 +8,16 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import style from './style.module.css';
 
 export function CustomDropDownMenu(){
-  const [isOpen, setIsOpen] = useState(false);
+  const [isFavorite, setFavorite] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
-  const handleSelect = (event: any) => {
-    console.log(event);
-    event.stopPropagation();
-  };
-  
-  const handleOpenChange = (event: boolean) => {
-    setIsOpen(event);
+  const handleDropdownItemClick = (event: Event) => {
+    event.preventDefault();
+    setFavorite(!isFavorite);
   };
 
   return (
-    <DropdownMenu.Root onOpenChange={handleOpenChange}>
+    <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger asChild>
         <button className={`${style.IconButton}`} aria-label="Customise options">
           <RxDotsVertical size={25} color='#A5A5A5'/>
@@ -28,7 +25,7 @@ export function CustomDropDownMenu(){
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content  className={`${style.DropdownMenuContent}`} sideOffset={5}>
+        <DropdownMenu.Content className={`${style.DropdownMenuContent}`} sideOffset={5}>
           <DropdownMenu.Item className={`${style.DropdownMenuItem}`}>
             Editar contato 
             <div className={`${style.RightSlot}`}>
@@ -43,11 +40,16 @@ export function CustomDropDownMenu(){
           </DropdownMenu.Item>
           <DropdownMenu.Item 
             className={`${style.DropdownMenuItem}`}
-            onSelect={handleSelect}
+            onSelect={handleDropdownItemClick}
           >
             Favorito
             <div className={`${style.RightSlot}`}>
-              <Checkbox icon={<FaRegStar />} checkedIcon={<FaStar />} size='medium' />
+              <Checkbox 
+                icon={!isFavorite ? <FaRegStar /> : <FaStar />} 
+                checkedIcon={isFavorite ? <FaStar /> : <FaRegStar />} 
+                size='medium'
+                checked={isFavorite}
+               />
             </div>
           </DropdownMenu.Item>
           <DropdownMenu.Arrow className={`${style.DropdownMenuArrow}`}/>
