@@ -9,7 +9,6 @@ import style from './style.module.css';
 
 export function CustomDropDownMenu(){
   const [isFavorite, setFavorite] = useState(false);
-  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const handleDropdownItemClick = (event: Event) => {
     event.preventDefault();
