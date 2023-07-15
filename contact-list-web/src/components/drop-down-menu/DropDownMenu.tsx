@@ -4,15 +4,26 @@ import { MdModeEdit } from 'react-icons/md';
 import { FaTrashAlt, FaStar, FaRegStar } from 'react-icons/fa';
 import Checkbox from '@mui/material/Checkbox';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { ContactPageService } from '../../pages/contact-page/ContactPageService';
 
 import style from './style.module.css';
 
-export function CustomDropDownMenu(){
-  const [isFavorite, setFavorite] = useState(false);
+interface CustomDropDownMenuProps {
+  isFavorite: boolean;
+  contactId: string;
+}
 
-  const handleDropdownItemClick = (event: Event) => {
+export function CustomDropDownMenu(props : CustomDropDownMenuProps){
+  const service = new ContactPageService();
+  const [isFavorite, setFavorite] = useState(props.isFavorite);
+
+  const handleDropdownItemClick = async (event: Event, id: string) => {
     event.preventDefault();
-    setFavorite(!isFavorite);
+    const data = {
+      id: id
+    }
+    const response = await service.toggleFavorite(data);
+    setFavorite(response.data.isFavorite);
   };
 
   return (
@@ -39,7 +50,7 @@ export function CustomDropDownMenu(){
           </DropdownMenu.Item>
           <DropdownMenu.Item 
             className={`${style.DropdownMenuItem}`}
-            onSelect={handleDropdownItemClick}
+            onSelect={(event) => handleDropdownItemClick(event, props.contactId)}
           >
             Favorito
             <div className={`${style.RightSlot}`}>

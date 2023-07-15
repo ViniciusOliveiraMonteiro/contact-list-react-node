@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Pagination } from "@mui/material";
 import { ContactCard } from "../contact-card/ContactCard";
-import { ContactDashboardService } from "./ContactDashboardService";
+import { ContactPageService } from "../../pages/contact-page/ContactPageService";
 import { ContactCards } from "../../pages/contact-page/ContactPage";
 import { DropDownSelect } from "../select/DropDownSelect";
 
@@ -14,7 +14,7 @@ export function ContactDashboard({ updatedState, setUpdatedState }: ContactDashb
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize, setPageSize] = useState('5');
   useEffect(() => {
-    const service = new ContactDashboardService();
+    const service = new ContactPageService();
     const getData = async () => {
       const response = await service.listContact();
       if (response.data) {
@@ -26,7 +26,7 @@ export function ContactDashboard({ updatedState, setUpdatedState }: ContactDashb
   }, [setUpdatedState]);
 
   async function requestData(page: number, pageSize: number){
-    const service = new ContactDashboardService();
+    const service = new ContactPageService();
     const response = await service.listContact(page, +pageSize);
     if (response.data) {
       setTotalPages(response.totalPages);
@@ -54,6 +54,8 @@ export function ContactDashboard({ updatedState, setUpdatedState }: ContactDashb
                 contactEmployment={item.occupation}
                 contactName={item.contact.formatedName}
                 contactPhone={item.contact.phoneNumber}
+                is_favorite={item.contact.is_favorite}
+                contactId={item.contact.id}
                 key={index}
               />
             );

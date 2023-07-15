@@ -17,7 +17,8 @@ export interface ContactCards extends Array<ContactCards> {
     email: string;
     phoneNumber: string;
     id: string;
-  }
+    is_favorite: boolean;
+  },
 };
 
 export function ContactPage() {
