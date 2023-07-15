@@ -4,9 +4,8 @@ import InputMask from "react-input-mask";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { RegisterFormService } from './RegisterFormService';
+import { ContactPageService } from '../../pages/contact-page/ContactPageService';
 import { ContactCards } from '../../pages/contact-page/ContactPage';
-import { ContactDashboardService } from '../contact-dashboard/ContactDashboardService';
 
 interface RegisterFormProps {
   dialogState?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -37,8 +36,7 @@ export function RegisterForm(props: RegisterFormProps) {
     companyName
   } = formData;
 
-  const service = new RegisterFormService();
-  const dashboardService = new ContactDashboardService();
+  const service = new ContactPageService();
 
   const validationSchema = Yup.object().shape({
     fullName: Yup.string().required('Nome Completo é obrigatório'),
@@ -76,7 +74,7 @@ export function RegisterForm(props: RegisterFormProps) {
       contactOccupation: occupation
     };
     const response = await service.registerContact(data);
-    const dashboardResponse = await dashboardService.listContact();
+    const dashboardResponse = await service.listContact();
     if((props.dialogState && response.success)){
       if(props.setUpdatedState && dashboardResponse.data){
         props.setUpdatedState(dashboardResponse.data);

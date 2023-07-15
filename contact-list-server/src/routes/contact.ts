@@ -67,7 +67,8 @@ export async function contactRoutes(app: FastifyInstance) {
               fullName: true,
               email: true,
               phoneNumber: true,
-              id: true
+              id: true,
+              is_favorite: true
             }
           }
         }
@@ -102,6 +103,37 @@ export async function contactRoutes(app: FastifyInstance) {
       }
 
       return response
+    });
+
+    app.patch('/toggle-favorite', async (request) => {
+      const { id: contactId } = request.body as {id: string};
+      const referenceContact = await prisma.contact.findUnique({
+        where: {
+          id: contactId
+        }
+      });
+      if(!referenceContact){
+        return {
+          success: false,
+          data: {},
+          message: 'Nenhum contato encontrado!'
+        }
+      }
+      const updateFavorite = await prisma.contact.update({
+        where: {
+          id: referenceContact.id
+        },
+        data: {
+          is_favorite: !referenceContact.is_favorite
+        }
+      });
+      
+      return {
+        success: true,
+        data: {
+          isFavorite: updateFavorite.is_favorite
+        }
+      }
     });
   } catch (error) {
     return {

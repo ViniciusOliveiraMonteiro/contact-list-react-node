@@ -10,6 +10,8 @@ interface ContactCardProps {
   contactCompany: string;
   contactPhone: string;
   contactEmail: string;
+  is_favorite: boolean;
+  contactId: string;
 }
 
 export function ContactCard(props: ContactCardProps) {
@@ -19,7 +21,7 @@ export function ContactCard(props: ContactCardProps) {
         <div className={`position-relative w-100 `}>
           <img src={img} alt="" className='ms-5'/>
           <div role="button" className={`position-absolute top-0 end-0`}>
-            <CustomDropDownMenu />
+            <CustomDropDownMenu isFavorite={props.is_favorite} contactId={props.contactId}/>
           </div>
         </div>
         <div className={`mt-3 ${style.userName}`}>

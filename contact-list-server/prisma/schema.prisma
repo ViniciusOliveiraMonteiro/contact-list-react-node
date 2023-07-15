@@ -18,6 +18,7 @@ model Contact {
   created_at     DateTime         @default(now())
   updated_at     DateTime?        @updatedAt
   deleted_at     DateTime?
+  is_favorite    Boolean          @default(false)
   contactCompany ContactCompany[]
 
   @@map("contacts")

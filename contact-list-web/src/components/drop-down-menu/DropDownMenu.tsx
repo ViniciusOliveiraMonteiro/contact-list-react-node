@@ -4,23 +4,30 @@ import { MdModeEdit } from 'react-icons/md';
 import { FaTrashAlt, FaStar, FaRegStar } from 'react-icons/fa';
 import Checkbox from '@mui/material/Checkbox';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { ContactPageService } from '../../pages/contact-page/ContactPageService';
 
 import style from './style.module.css';
 
-export function CustomDropDownMenu(){
-  const [isOpen, setIsOpen] = useState(false);
+interface CustomDropDownMenuProps {
+  isFavorite: boolean;
+  contactId: string;
+}
 
-  const handleSelect = (event: any) => {
-    console.log(event);
-    event.stopPropagation();
-  };
-  
-  const handleOpenChange = (event: boolean) => {
-    setIsOpen(event);
+export function CustomDropDownMenu(props : CustomDropDownMenuProps){
+  const service = new ContactPageService();
+  const [isFavorite, setFavorite] = useState(props.isFavorite);
+
+  const handleDropdownItemClick = async (event: Event, id: string) => {
+    event.preventDefault();
+    const data = {
+      id: id
+    }
+    const response = await service.toggleFavorite(data);
+    setFavorite(response.data.isFavorite);
   };
 
   return (
-    <DropdownMenu.Root onOpenChange={handleOpenChange}>
+    <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger asChild>
         <button className={`${style.IconButton}`} aria-label="Customise options">
           <RxDotsVertical size={25} color='#A5A5A5'/>
@@ -28,7 +35,7 @@ export function CustomDropDownMenu(){
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content  className={`${style.DropdownMenuContent}`} sideOffset={5}>
+        <DropdownMenu.Content className={`${style.DropdownMenuContent}`} sideOffset={5}>
           <DropdownMenu.Item className={`${style.DropdownMenuItem}`}>
             Editar contato 
             <div className={`${style.RightSlot}`}>
@@ -43,11 +50,16 @@ export function CustomDropDownMenu(){
           </DropdownMenu.Item>
           <DropdownMenu.Item 
             className={`${style.DropdownMenuItem}`}
-            onSelect={handleSelect}
+            onSelect={(event) => handleDropdownItemClick(event, props.contactId)}
           >
             Favorito
             <div className={`${style.RightSlot}`}>
-              <Checkbox icon={<FaRegStar />} checkedIcon={<FaStar />} size='medium' />
+              <Checkbox 
+                icon={!isFavorite ? <FaRegStar /> : <FaStar />} 
+                checkedIcon={isFavorite ? <FaStar /> : <FaRegStar />} 
+                size='medium'
+                checked={isFavorite}
+               />
             </div>
           </DropdownMenu.Item>
           <DropdownMenu.Arrow className={`${style.DropdownMenuArrow}`}/>

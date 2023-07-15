@@ -63,8 +63,8 @@ button {
 .DropdownMenuCheckboxItem[data-highlighted],
 .DropdownMenuRadioItem[data-highlighted],
 .DropdownMenuSubTrigger[data-highlighted] {
-  background-color: bisque;
-  color: coral;
+  background-color: #CECECE;
+  color: #6418C3;
 }
 
 .DropdownMenuLabel {
@@ -121,7 +121,7 @@ button {
   color: #6418C3;
 }
 [data-highlighted] > .RightSlot {
-  color: white;
+  color: #6418C3;
 }
 [data-disabled] .RightSlot {
   color: var(--mauve-8);
