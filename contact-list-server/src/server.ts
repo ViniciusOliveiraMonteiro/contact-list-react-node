@@ -3,7 +3,7 @@ import cors from '@fastify/cors';
 import { contactRoutes } from "./routes/contact";
 
 const app = Fastify();
-
+//teste
 app.register(cors);
 app.register(contactRoutes);
 app.listen({
